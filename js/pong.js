@@ -59,14 +59,14 @@ Ball.prototype.draw = function () {
 Ball.prototype.update =function() {
   this.xPos += this.xVel;
   this.yPos += this.yVel;
-  if (this.xPos + this.radius>= width) {
+  if (this.xPos + this.radius>= width - paddleWidth) {
     if (this.yPos > paddleTwo.yPos && this.yPos < paddleTwo.yPos + paddleHeight) {
       this.xVel *= -1;
     } else {
       ball.xPos = 250;
       ball.yPos = 250;
     }
-  } else if (this.xPos - this.radius<= 0) {
+  } else if (this.xPos - this.radius<= paddleWidth) {
       if (this.yPos > paddleOne.yPos && this.yPos < paddleOne.yPos + paddleHeight) {
         this.xVel *= -1;
       } else {
@@ -79,7 +79,7 @@ Ball.prototype.update =function() {
   } else if (this.yPos - this.radius<= 0) {
     this.yVel *= -1;
   }
-}
+};
 
 function Paddle(xPos, yPos, width, height) {
   this.xPos = xPos;
@@ -97,14 +97,16 @@ Paddle.prototype.draw = function () {
 
 Paddle.prototype.update = function () {
   this.xPos += this.xVel;
-  this.yPos += this.yVel;
-  if (ball.yPos < this.yPos) {
-    this.yVel = -4;
-  } else if (ball.yPos > this.yPos) {
-    this.yVel = 4;
-  } else {
-    this.yVel = 0;
+  if (this.yPos + this.yVel > 0 && this.yPos + this.yVel < height - paddleHeight) {
+    this.yPos += this.yVel;
   }
+  // if (ball.yPos < this.yPos) {
+  //   this.yVel = -4;
+  // } else if (ball.yPos > this.yPos) {
+  //   this.yVel = 4;
+  // } else {
+  //   this.yVel = 0;
+  // }
 };
 
 // PlayerOne.controls = function() {
@@ -126,10 +128,29 @@ window.onload = function() {
 };
 
 window.addEventListener("keydown", function(event) {
-  keysDown[event.keyCode] = true;
-  console.log(keysDown);
+  if (event.keyCode === 38) {
+    console.log("one");
+    paddleTwo.yVel = -6
+  } else if (event.keyCode === 40) {
+    paddleTwo.yVel = 6
+    console.log(event.keyCode);
+  }
+  if (event.keyCode === 87) {
+    console.log("one");
+    paddleOne.yVel = -6
+  } else if (event.keyCode === 83) {
+    paddleOne.yVel = 6
+    console.log(event.keyCode);
+  }
+    keysDown = event.keyCode;
+    console.log(keysDown);
 });
 
 window.addEventListener("keyup", function (event) {
-    delete keysDown[event.keyCode];
+  if (event.keyCode === 87 || event.keyCode === 83) {
+    paddleOne.yVel = 0;
+  }
+  if (event.keyCode === 38 || event.keyCode === 40) {
+    paddleTwo.yVel = 0;
+  }
 });
