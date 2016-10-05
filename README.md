@@ -1,9 +1,7 @@
 # _Ping Pong_
 
-#### _A counting application that will replace certain numbers with specific words, 6/10/2016_
+#### _A counting application that will replace certain numbers with specific words, also contains the game Pong, 6/10/2016_
 
-#### View this website on my [github pages][1]
-[1]: http://jmdelight.github.io/pingpong/ "Ping Pong Counter"
 
 #### By _**Joel Delight**_
 
